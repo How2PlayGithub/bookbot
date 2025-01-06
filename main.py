@@ -1,8 +1,24 @@
+import os
 import subprocess
 import re
 from typing import Dict, List
 
-bookPath: str = "./books/frankenstein.txt"
+
+def bookSearch(booksDirectory: str) -> str:
+    if not os.path.exists(booksDirectory) or not os.path.isdir(booksDirectory):
+        raise ValueError(f"Directory {booksDirectory} does not exist!")
+
+    try:
+        selectedFile = subprocess.check_output(
+            ["fzf", "--preview", "echo {}"], cwd=booksDirectory, text=True
+        ).strip()
+
+        if selectedFile:
+            return os.path.join(booksDirectory, selectedFile)
+        else:
+            return "No file selected."
+    except subprocess.CalledProcessError:
+        return "Error running fzf or no file selected."
 
 
 def bookLen(fileContents: str) -> int:
@@ -89,6 +105,9 @@ def wordSearch(fileContents: str, searchWord: str) -> None:
 
 
 def main() -> None:
+    bookPath: str = "./books/"
+    bookPath = bookSearch(bookPath)
+
     with open(bookPath) as f:
         fileContents: str = f.read()
 
