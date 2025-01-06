@@ -92,16 +92,31 @@ def main() -> None:
     with open(bookPath) as f:
         fileContents: str = f.read()
 
-    bookLength = bookLen(fileContents)
-    print(f"{bookLength} words found in the document")
+    bookLength: int = bookLen(fileContents)
+    charCount: Dict[str, int] = charList(fileContents.lower())
+    validUserOptions: List[int] = [1, 2, 3]
 
-    charCount = charList(fileContents.lower())
+    print("Bookbot!")
+    print("Option 1: book length")
+    print("Option 2: character count")
+    print("Option 3: word search")
 
-    for char, count in charCount.items():
-        print(f"The '{char}' character was found {count} times")
+    while True:
+        try:
+            userOption: int = int(input("What option would you like: "))
+            if userOption in validUserOptions:
+                break
+        except ValueError:
+            print("Please enter the number")
 
-    userSearchWord: str = str(input("What word would you like to search: "))
-    wordSearch(fileContents, userSearchWord)
+    if userOption == 1:
+        print(bookLength)
+    elif userOption == 2:
+        for char, count in charCount.items():
+            print(f"The '{char}' character was found {count} times")
+    elif userOption == 3:
+        userSearchWord: str = str(input("What word would you like to search: "))
+        wordSearch(fileContents, userSearchWord)
 
 
 if __name__ == "__main__":
