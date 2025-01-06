@@ -8,6 +8,7 @@ Features List:
 - Word Search
 
 To use:
-Run `mkdir books` within the directory
-Add the book (in a .txt format) into `./books/`
-Run `python3 main.py`
+
+- Run `mkdir books` within the directory
+- Add the book (in a .txt format) into `./books/`
+- Run `python3 main.py`
